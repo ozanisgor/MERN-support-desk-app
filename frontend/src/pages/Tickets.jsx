@@ -11,6 +11,14 @@ function Tickets() {
   const dispatch = useDispatch()
 
   useEffect(() => {
+    return () => {
+      if (isSuccess) {
+        dispatch(reset())
+      }
+    }
+  }, [dispatch, isSuccess])
+
+  useEffect(() => {
     dispatch(getTickets())
   }, [dispatch])
 
