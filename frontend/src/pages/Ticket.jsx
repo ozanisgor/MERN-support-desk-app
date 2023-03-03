@@ -55,9 +55,11 @@ function Ticket() {
 
   // Close ticket
   const onTicketClose = () => {
-    dispatch(closeTicket(ticketId))
-    toast.success('Ticket Closed')
-    navigate('/tickets')
+    if (window.confirm('Are you sure you want to close ticket?')) {
+      dispatch(closeTicket(ticketId))
+      toast.success('Ticket Closed')
+      navigate('/tickets')
+    }
   }
 
   // Create note submit
