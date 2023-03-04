@@ -185,6 +185,24 @@ h3 {
   transform: scale(0.98);
 }
 
+.btn:disabled {
+  background-color: #cccccc;
+  color: #747474;
+  cursor: auto;
+  border-color: #fff;
+}
+
+.btn:disabled:hover {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.errMessage {
+  padding-top: 10px;
+  text-align: center;
+  color: rebeccapurple;
+}
+
 .ticket-created {
   border: 1px solid #e6e6e6;
   border-radius: 5px;

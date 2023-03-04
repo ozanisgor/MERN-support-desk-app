@@ -32,6 +32,8 @@ Modal.setAppElement('#root')
 function Ticket() {
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const [noteText, setNoteText] = useState('')
+  const [btnDisabled, setBtnDisabled] = useState(true)
+  const [errMessage, setErrMessage] = useState('')
   const { ticket, isLoading, isSuccess, isError, message } = useSelector(
     state => state.tickets
   )
@@ -67,6 +69,24 @@ function Ticket() {
     e.preventDefault()
     dispatch(createNote({ noteText, ticketId }))
     closeModal()
+  }
+
+  const handleTextChange = ({ target: { value } }) => {
+    // 👈  get the value
+    if (value === '') {
+      setBtnDisabled(true)
+      setErrMessage(null)
+
+      // prettier-ignore
+    } else if (value.trim().length < 10) {
+      // 👈 check for less than 10
+      setErrMessage('Text must be at least 10 characters')
+      setBtnDisabled(true)
+    } else {
+      setErrMessage(null)
+      setBtnDisabled(false)
+    }
+    setNoteText(value)
   }
 
   // Open/Close Modal
@@ -136,17 +156,19 @@ function Ticket() {
               className="form-control"
               placeholder="Your note..."
               value={noteText}
-              onChange={e => setNoteText(e.target.value)}
+              onChange={handleTextChange}
             ></textarea>
           </div>
           <div className="form-group">
             <button
               className="btn"
               type="submit"
+              disabled={btnDisabled}
             >
               Submit
             </button>
           </div>
+          {errMessage && <div className="errMessage">{errMessage}</div>}
         </form>
       </Modal>
 
